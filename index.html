@@ -20,16 +20,45 @@
     />
     <title>Add to Cart</title>
   </head>
-  <body class="bg-gray-900">
-    <main class="max-w-6xl mx-auto px-4">
-      <h1 class="px-2 py-4 text-xl font-semibold text-gray-50">Product List</h1>
+  <body class="bg-gray-900 pt-4">
+    <div
+      class="flex max-w-6xl mx-auto justify-between items-center sticky top-0 h-20 z-20 bg-gray-900 shadow-2xl"
+    >
+      <h1 class="px-2 py-4 text-2xl font-semibold text-gray-50 min-w-max">
+        Product List
+      </h1>
+      <div class="drawer drawer-end justify-end">
+        <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
+        <div class="drawer-content">
+          <!-- Page content here -->
+          <div
+            class="badge badge-light badge-sm absolute z-10 -right-4 -top-2 text-xs"
+          >
+            0
+          </div>
+          <label for="my-drawer-4" class="drawer-button relative"
+            ><img class="h-8 w-8" src="./cart.png" alt="cart-icon"
+          /></label>
+        </div>
+        <div class="drawer-side">
+          <label
+            for="my-drawer-4"
+            aria-label="close sidebar"
+            class="drawer-overlay"
+          ></label>
+          <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+            <!-- Sidebar content here -->
+            <li><a>Sidebar Item 1</a></li>
+            <li><a>Sidebar Item 2</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <main class="px-4 space-y-6">
       <section
         id="product-container"
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-      >
-
-
-      </section>
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto"
+      ></section>
     </main>
     <script src="./script.js"></script>
   </body>

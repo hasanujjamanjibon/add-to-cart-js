@@ -15,14 +15,14 @@ async function fetchProduct() {
       description,
       price,
       discountPercentage,
-      rating,
+
       thumbnail,
     }) => {
       container.innerHTML += `
       <div class="card max-w-96 mx-auto bg-gray-700 text-gray-100 relative">
-      <div class="badge badge-light absolute z-10 right-6 top-4"> approx: ${Math.ceil(
-        rating
-      )}%</div>
+      <div class="badge badge-light absolute z-10 right-6 top-4"> Discount ${parseFloat(
+        (discountPercentage / price) * 100
+      ).toFixed(2)}%</div>
       <figure>
         <img
           src=${thumbnail}
@@ -47,7 +47,7 @@ async function fetchProduct() {
         <span class="line-through">${parseFloat(price).toFixed(2)}$</span>
         </p>
         <div class="card-actions justify-end">
-         <button onclick="addToCart(${id})" class="uppercase p-2 text-md font-medium border-2 rounded-md bg-gray-700 w-full text-gray-200 hover:bg-gray-900 transition-colors duration-500">add to cart</button>
+         <button onclick="addToCart(${id})" class="uppercase p-2 text-md font-medium border-2 rounded-md bg-gray-800 w-full text-gray-200 hover:bg-gray-900 transition-colors duration-500">add to cart</button>
         </div>
 
       </div>
@@ -159,7 +159,7 @@ async function displayItem() {
   );
   // const itemCount = cart.map((item) => item.quantity);
   itemCountEl.innerHTML = itemCount;
-  totalCoseEl.innerHTML = totalCost+"$";
+  totalCoseEl.innerHTML = totalCost + "$";
 }
 
 fetchProduct();

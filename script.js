@@ -1,4 +1,7 @@
 const container = document.querySelector("#product-container");
+const cartConatiner = document.querySelector("#cartItem-container");
+const totalCoseEl = document.querySelector("#total-cost");
+const itemCountEl = document.querySelector("#item-count");
 
 // fetch product data
 async function fetchProduct() {
@@ -52,6 +55,7 @@ async function fetchProduct() {
       `;
     }
   );
+  displayItem();
 }
 
 // add to cart
@@ -63,6 +67,8 @@ function addToCart(id) {
     getCartItem[id] = 1;
   }
   localStorage.setItem("cart", JSON.stringify(getCartItem));
+  window.location.reload();
+  displayItem();
 }
 
 // delete Cart
@@ -82,7 +88,78 @@ function deleteCart(id) {
 
   // Save the updated cart back to localStorage
   localStorage.setItem("cart", JSON.stringify(cart));
+  window.location.reload();
+  displayItem();
+}
+
+function getitem() {
+  const getCartItem = JSON.parse(localStorage.getItem("cart")) || {};
+  return getCartItem;
+}
+
+async function displayItem() {
+  const getCartItem = getitem();
+
+  let cart = [];
+  const res = await fetch("https://dummyjson.com/products/search?q=play");
+  const { products } = await res.json();
+  for (const key in getCartItem) {
+    console.log();
+    const cartItem = products.find((v) => v.id == key);
+    cart.push({ quantity: getCartItem[key], ...cartItem });
+  }
+  console.log(cart);
+  cart.forEach(
+    ({ thumbnail, title, discountPercentage, price, quantity, id }) => {
+      cartConatiner.innerHTML += `
+  <div
+  class="p-2 rounded-md text-white bg-gray-800 flex items-start gap-2"
+>
+  <!-- * cart image -->
+  <div class="h-28 w-28 rounded-lg bg-gray-700">
+    <img
+      class="h-full w-full object-cover"
+      src=${thumbnail}
+      alt=""
+    />
+  </div>
+  <!-- * cart text -->
+  <div class="h-full font-medium text-xl space-y-2">
+    <h1> ${title.length > 15 ? title.slice(0, 15) + "..." : title}</h1>
+    <p class="text-lg">Price : <span>${parseFloat(
+      (price - discountPercentage) * parseInt(quantity)
+    ).toFixed(2)}$</span></p>
+    <div
+      class="flex justify-center  w-32 items-center gap-2 border-2 border-gray-600 rounded-md p-1"
+    >
+      <button class="text-2xl px-2" onclick="deleteCart(${id})">-</button>
+      <input
+        class="max-w-10 text-sm bg-transparent text-center focus:outline-none"
+        type="text"
+        value=${parseInt(quantity)}
+        readonly
+      />
+      <button class="text-2xl px-2" onclick="addToCart(${id})">+</button>
+    </div>
+  </div>
+</div>
+  `;
+    }
+  );
+  const totalCost = cart
+    .reduce(
+      (sum, { price, discountPercentage, quantity }) =>
+        parseFloat((price - discountPercentage) * parseInt(quantity)) + sum,
+      0
+    )
+    .toFixed(2);
+  const itemCount = cart.reduce(
+    (sum, { quantity }) => parseInt(quantity) + sum,
+    0
+  );
+  // const itemCount = cart.map((item) => item.quantity);
+  itemCountEl.innerHTML = itemCount;
+  totalCoseEl.innerHTML = totalCost+"$";
 }
 
 fetchProduct();
-

@@ -32,6 +32,7 @@
         <div class="drawer-content">
           <!-- Page content here -->
           <div
+          id="item-count"
             class="badge badge-light badge-sm absolute z-10 -right-4 -top-2 text-xs"
           >
             0
@@ -56,39 +57,14 @@
 
             <!-- ! cart item container -->
             <div
+            id="cartItem-container"
               class="py-2 me-4 space-y-2 min-h-[calc(100vh-160px)] overflow-y-auto"
             >
-              <!--! cart item -->
-              <div
-                class="p-2 rounded-md text-white bg-gray-800 flex items-start gap-2"
-              >
-                <!-- * cart image -->
-                <div class="h-28 w-28 rounded-lg bg-gray-700">
-                  <img
-                    class="h-full w-full object-cover"
-                    src="https://cdn.dummyjson.com/products/images/home-decoration/Family%20Tree%20Photo%20Frame/thumbnail.png"
-                    alt=""
-                  />
-                </div>
-                <!-- * cart text -->
-                <div class="h-full font-medium text-xl space-y-2">
-                  <h1 class=" ">Family Tree</h1>
-                  <p class="text-lg">Price <span>28.46$</span></p>
 
-                  <div
-                    class="flex justify-center items-center gap-2 border-2 border-gray-600 rounded-md p-1"
-                  >
-                    <button class="text-2xl px-2">-</button>
-                    <input
-                      class="max-w-10 text-sm bg-transparent text-center focus:outline-none"
-                      type="text"
-                      value="0"
-                      readonly
-                    />
-                    <button class="text-2xl px-2">+</button>
-                  </div>
-                </div>
-              </div>
+<!-- 
+
+  cart item display hewre
+ -->
 
               <!--  -->
             </div>
@@ -97,7 +73,7 @@
                 class="flex justify-between items-center text-xl text-gray-100"
               >
                 <p>Total</p>
-                <p>$366</p>
+                <p id="total-cost">$366</p>
               </div>
               <button class="btn btn-primary w-full text-xl capitalize">
                 checkout

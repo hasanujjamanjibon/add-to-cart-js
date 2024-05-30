@@ -4,8 +4,7 @@ const container = document.querySelector("#product-container");
 async function fetchProduct() {
   const res = await fetch("https://dummyjson.com/products/search?q=play");
   const { products } = await res.json();
-  console.log(products);
-  console.log(products?.length);
+
   products.forEach(
     ({
       id,
@@ -16,19 +15,11 @@ async function fetchProduct() {
       rating,
       thumbnail,
     }) => {
-      console.log(
-        id,
-        title,
-        description,
-        price,
-        discountPercentage,
-        rating,
-        thumbnail
-      );
-
       container.innerHTML += `
       <div class="card max-w-96 mx-auto bg-gray-700 text-gray-100 relative">
-      <div class="badge badge-light absolute z-10 right-6 top-4"> approx: ${Math.ceil(rating)}%</div>
+      <div class="badge badge-light absolute z-10 right-6 top-4"> approx: ${Math.ceil(
+        rating
+      )}%</div>
       <figure>
         <img
           src=${thumbnail}
@@ -53,13 +44,24 @@ async function fetchProduct() {
         <span class="line-through">${parseFloat(price).toFixed(2)}$</span>
         </p>
         <div class="card-actions justify-end">
-         <button class="uppercase p-2 text-md font-medium border-2 rounded-md bg-gray-700 w-full text-gray-200 hover:bg-gray-900 transition-colors duration-500">add to cart</button>
+         <button onclick="addToCart(${id})" class="uppercase p-2 text-md font-medium border-2 rounded-md bg-gray-700 w-full text-gray-200 hover:bg-gray-900 transition-colors duration-500">add to cart</button>
         </div>
       </div>
     </div>
       `;
     }
   );
+}
+
+// add to cart
+function addToCart(id) {
+  const getCartItem = JSON.parse(localStorage.getItem("cart")) || {};
+  if (getCartItem[id]) {
+    getCartItem[id] += 1;
+  } else {
+    getCartItem[id] = 1;
+  }
+  localStorage.setItem("cart", JSON.stringify(getCartItem));
 }
 
 fetchProduct();

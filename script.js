@@ -46,6 +46,7 @@ async function fetchProduct() {
         <div class="card-actions justify-end">
          <button onclick="addToCart(${id})" class="uppercase p-2 text-md font-medium border-2 rounded-md bg-gray-700 w-full text-gray-200 hover:bg-gray-900 transition-colors duration-500">add to cart</button>
         </div>
+
       </div>
     </div>
       `;
@@ -64,4 +65,24 @@ function addToCart(id) {
   localStorage.setItem("cart", JSON.stringify(getCartItem));
 }
 
+// delete Cart
+function deleteCart(id) {
+  // Retrieve the cart from localStorage
+  let cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+  // If the product exists in the cart, decrease the quantity
+  if (cart[id]) {
+    cart[id] -= 1;
+
+    // If the quantity reaches 0, remove the item from the cart
+    if (cart[id] === 0) {
+      delete cart[id];
+    }
+  }
+
+  // Save the updated cart back to localStorage
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
 fetchProduct();
+
